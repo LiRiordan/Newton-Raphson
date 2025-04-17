@@ -1,14 +1,15 @@
 import torch
 from matplotlib import pyplot as plt
 import numpy as np
+import math
 from matplotlib.animation import FuncAnimation
 plt.style.use("Solarize_Light2")
 
 epsilon = 0.005
-x = 0.7
-f = lambda t: 0.1*(t - 5 - 4*(t-1)**3 + (t)**4)
-xr = (-1.0,4.0)
-yr = (-1.0,14.0)
+x = 0.6
+f = lambda t: 0.5*(t**3 - 0.4*(t**2) - t + 2)
+xr = (-5.0,5.0)
+yr = (-2.0,15.0)
 
 class Newton_raphson():
     def __init__(self, x: float, func, xr: tuple[float, float], yr: tuple[float, float], epsilon: float):
@@ -38,7 +39,7 @@ class Newton_raphson():
             x_prime = X.grad
             t = t - (Y.item()/x_prime.item())
             Err = np.abs(Y.item())
-            L.append([t,f(t)])
+            L.append([t,self.func(t)])
             stop += 1
         if stop >= stopping:
             print('Bad starting value!')
